@@ -309,8 +309,15 @@ struct MCPClientConfigMergeTests {
         try dir.write("{ not json at all")
         let before = try Data(contentsOf: dir.configURL)
 
-        #expect(throws: MCPClientConfigError.self) {
+        do {
             _ = try file.merge(["shikki-db": declaredServer()], into: dir.configURL)
+            Issue.record("a document we could not read must not be clobbered")
+        } catch let error as MCPClientConfigError {
+            guard case .unreadable(let detail) = error else {
+                Issue.record("the refusal must name the reason, not a generic failure: \(error)")
+                return
+            }
+            #expect(!detail.isEmpty)
         }
         #expect(try Data(contentsOf: dir.configURL) == before)
     }
