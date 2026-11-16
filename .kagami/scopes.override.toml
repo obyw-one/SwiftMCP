@@ -1,0 +1,14 @@
+# .kagami/scopes.override.toml — SwiftMCP's own scope registrations.
+# Committed to git; survives `kagami auto-discover --write-cache`.
+# Per [[kagami-scopes-toml-is-cache-not-source-2026-06-03]].
+
+[[scopes]]
+name = "SwiftMCPConfig"
+language = "swift"
+package_path = "."
+test_target_name = "SwiftMCPConfigTests"
+type_patterns = ["MCPClientConfig", "MCPClientConfigFile", "MCPClientConfigReadOutcome", "MCPClientConfigError", "MCPServerTransport", "MCPClientConfigRoundTripTests", "MCPClientConfigReadOutcomeTests", "MCPClientConfigMergeTests"]
+test_file_patterns = ["**/SwiftMCPConfigTests/MCPClientConfigTests.swift"]
+timeout_seconds = 300
+expected_test_min = 17
+description = "Spec dd8b1a1c W1 (BR-MCPK-01/02/03/04): the `.mcp.json` client-configuration document as a typed Codable model, replacing the string concatenation shikki's MCPStackRegistry.generateMCPConfigFromStack still does on develop. Pins the three properties a string cannot have: ROUND-TRIP (encode/decode equality, `mcpServers` present, `/` unescaped so a path stays greppable, and no redundant `name` key inside an entry since the name is the dictionary key), EVERY OUTCOME NAMED (absent file / unreadable bytes / non-object root / `{}` are four distinct answers, never one silently empty document), and MERGE NOT OVERWRITE (a foreign entry and an unmodelled field survive, only the named entry is replaced, writing is byte-idempotent, and an unreadable document is refused instead of clobbered)."
