@@ -1,0 +1,25 @@
+.build/
+.swiftpm/
+# SwiftPM pins a LIBRARY's dependencies at the consumer, not here.
+Package.resolved
+
+# kagami auto-generated scope cache — regenerable via `kagami auto-discover --write-cache`.
+# scopes.override.toml is the canonical hand-edited source and IS committed;
+# scopes.toml is a regenerable cache.
+.kagami/scopes.toml
+
+# kagami SQLite scratch — local test state, never committed (the rule ShikkiMCP,
+# CoreKit and shikki all apply).
+.kagami/history.db
+.kagami/history.db-shm
+.kagami/history.db-wal
+.kagami/history.db.write-lock
+.kagami/tmp/
+# kagami per-run status — local scratch.
+.kagami/runs/
+
+# moto cache — regenerable via `shi moto build`.
+.moto
+.moto-cache/
+
+.DS_Store

@@ -17,6 +17,7 @@ let package = Package(
         .library(name: "SwiftMCPCore", targets: ["SwiftMCPCore"]),
         .library(name: "SwiftMCPServer", targets: ["SwiftMCPServer"]),
         .library(name: "SwiftMCPTesting", targets: ["SwiftMCPTesting"]),
+        .library(name: "SwiftMCPConfig", targets: ["SwiftMCPConfig"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
@@ -42,6 +43,16 @@ let package = Package(
             ]
         ),
 
+        // MARK: - SwiftMCPConfig
+        // The `.mcp.json` CLIENT-configuration document: a typed Codable model
+        // with a merging, idempotent writer. Foundation only, so it builds on
+        // Linux; it deliberately links Core (for `JSONValue`) and NOT Server —
+        // a consumer that writes a config file must not link an MCP server.
+        .target(
+            name: "SwiftMCPConfig",
+            dependencies: ["SwiftMCPCore"]
+        ),
+
         // MARK: - SwiftMCPTesting
         // Test helpers: synthetic stdin/stdout pipes, fixture loaders, timeout assertions.
         .target(
@@ -64,6 +75,10 @@ let package = Package(
                 "SwiftMCPServer",
                 "SwiftMCPTesting",
             ]
+        ),
+        .testTarget(
+            name: "SwiftMCPConfigTests",
+            dependencies: ["SwiftMCPConfig"]
         ),
         .testTarget(
             name: "SwiftMCPTestingTests",
